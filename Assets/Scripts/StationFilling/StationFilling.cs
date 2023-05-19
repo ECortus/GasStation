@@ -1,0 +1,103 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class StationFilling : MonoBehaviour
+{
+    int _level = 0;
+    public int MaxLevel = 5;
+    [SerializeField] private List<int> MaxFillAmountEachLevel = new List<int>();
+    public List<int> CostAmountEachLevel = new List<int>();
+    /* [SerializeField] private int amountUpPerLevel = 1; */
+    public int Level
+    {
+        get
+        {
+            return _level;
+        }
+        set
+        {
+            _level = value;
+        }
+    }
+
+    public void Upgrade()
+    {
+        int value = Level + 1;
+        Level = value;
+
+        slider.Refresh();
+    }
+
+    [Space]
+    /* [SerializeField] private int defaultMaxFillAmount; */
+    [HideInInspector] public int FillAmount;
+    public int MaxFillAmount
+    {
+        get
+        {
+            return MaxFillAmountEachLevel[Level];
+            /* return defaultMaxFillAmount + (amountUpPerLevel * Level); */
+        }
+    }
+
+    private int MoneyAmount = 0;
+
+    [Space]
+    public Tanker tanker;
+    [SerializeField] private StationFillingCashStorage cashStorage;
+    [SerializeField] private StationFillingInfoSliderUI slider;
+
+    void Start()
+    {
+        slider.Refresh();
+    }
+
+    public void AddToAmount(int amnt)
+    {
+        MoneyAmount += amnt;
+        AddToStorage();
+    }
+
+    public void AddToStorage()
+    {
+        cashStorage.AddCash();
+    }
+
+    public void Transfer()
+    {
+        if(MoneyAmount > 0)
+        {
+            cashStorage.TransferAllToPlayer();
+            Money.Plus(MoneyAmount);
+            MoneyAmount = 0;
+
+            /* counter.Refresh(); */
+        }
+    }
+
+    public void Fill()
+    {
+        tanker.TransferToStationFilling(this);
+        slider.Refresh();
+    }
+
+    public bool TransferToClient(int amount)
+    {
+        if(FillAmount == 0)
+        {
+            return false;
+        }
+        else if(FillAmount - amount < 0)
+        {
+            return false;
+        }
+        else
+        {
+            FillAmount -= amount;
+        }
+
+        slider.Refresh();
+        return true;
+    }
+}
