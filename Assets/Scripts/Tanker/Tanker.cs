@@ -23,6 +23,8 @@ public class Tanker : MonoBehaviour
         int value = Level + 1;
         Level = value;
 
+        slider.Refresh();
+
         /* Fill(); */
     }
 

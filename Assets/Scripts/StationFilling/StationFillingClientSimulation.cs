@@ -58,8 +58,16 @@ public class StationFillingClientSimulation : MonoBehaviour
         bool existInPool = false;
         StationFillingClient clnt = null;
 
+        yield return new WaitForSeconds(3f);
+
         while(true)
         {
+            if(Station.Level == -1) 
+            {
+                yield return new WaitUntil(() => Station.Level > -1);
+                yield return new WaitForSeconds(3f);
+            }
+            
             existInPool = false;
 
             foreach(StationFillingClient cl in ClientPool)

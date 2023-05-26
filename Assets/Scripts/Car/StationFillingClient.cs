@@ -7,6 +7,7 @@ public class StationFillingClient : Car
     [Space]
     [Header("Client par-s: ")]
     [SerializeField] private int requireGasAmount;
+    [SerializeField] private ClientAlert alert;
     /* [SerializeField] private int minReward, maxReward; */
     private int Reward
     {
@@ -90,6 +91,13 @@ public class StationFillingClient : Car
         if(requireGasAmount > Station.FillAmount)
         {
             yield return new WaitUntil(() => Station.FillAmount >= requireGasAmount);
+        }
+
+        if(GasBuyPriceSimulation.Instance.ValuesRatio > GasPriceInfo.Instance.MaxPercent * 0.5f)
+        {
+            alert.On();
+            yield return new WaitUntil(() => GasBuyPriceSimulation.Instance.ValuesRatio <= GasPriceInfo.Instance.MaxPercent * 0.5f);
+            alert.Off();
         }
 
         Station.TransferToClient(requireGasAmount);

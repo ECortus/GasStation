@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StationFilling : MonoBehaviour
 {
-    int _level = 0;
+    int _level = -1;
+    [SerializeField] private int SetupLevel = 0;
     public int MaxLevel = 5;
     [SerializeField] private List<int> MaxFillAmountEachLevel = new List<int>();
     public List<int> CostAmountEachLevel = new List<int>();
@@ -36,7 +37,7 @@ public class StationFilling : MonoBehaviour
     {
         get
         {
-            return MaxFillAmountEachLevel[Level];
+            return Level > -1 ? MaxFillAmountEachLevel[Level] : 0;
             /* return defaultMaxFillAmount + (amountUpPerLevel * Level); */
         }
     }
@@ -48,9 +49,31 @@ public class StationFilling : MonoBehaviour
     [SerializeField] private StationFillingCashStorage cashStorage;
     [SerializeField] private StationFillingInfoSliderUI slider;
 
+    [Space]
+    [SerializeField] private Animation sell;
+    [SerializeField] private Animation buy;
+
     void Start()
     {
+        if(Level < 0)
+        {
+            Level = SetupLevel;
+        }
+
+        if(Level > -1)
+        {
+            Buy();
+        }
+
         slider.Refresh();
+    }
+
+    public void Buy()
+    {
+        buy.Play("ShowConstruction");
+        sell.Play("HideConstruction");
+
+        Upgrade();
     }
 
     public void AddToAmount(int amnt)

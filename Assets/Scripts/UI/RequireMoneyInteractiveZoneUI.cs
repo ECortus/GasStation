@@ -77,6 +77,9 @@ public class RequireMoneyInteractiveZoneUI : MonoBehaviour
         {
             if(!ConditionToAllowInter) break;
 
+            if(Statistics.Money > 10 && MoneyAmount - 10 > 0) amount = 10;
+            else amount = 1;
+
             Money.Minus(amount);
             MoneyAmount -= amount;
 

@@ -90,6 +90,8 @@ public class GasTruck : Car
         {
             Money.Minus(money);
             tanker.Fill();
+
+            GasBuyPriceSimulation.Instance.Change();
         }
         else if(Statistics.Money > 0 && money > Statistics.Money)
         {
@@ -98,6 +100,8 @@ public class GasTruck : Car
 
             Money.Minus(money);
             tanker.FillValue(amount);
+
+            GasBuyPriceSimulation.Instance.Change();
 
             /* yield return new WaitUntil(() => money <= Statistics.Money); */
         }

@@ -9,12 +9,33 @@ public class GasPriceInfoUI : MonoBehaviour
     [SerializeField] private GasPriceInfo info;
     [SerializeField] private GasSalePriceSliderUI saleSlider;
 
+    public float ValuesRatio
+    {
+        get
+        {
+            return saleSlider.ValuesRatio;
+        }
+    }
+
     [Space]
     [SerializeField] private TextMeshProUGUI salePriceInStand;
     [SerializeField] private TextMeshProUGUI salePrice;
     [SerializeField] private TextMeshProUGUI buyPrice;
 
-    void Refresh()
+    float amount 
+    {
+        get
+        {
+            return System.MathF.Round((info.MaxPrice - info.GasBuyPrice) * 0.05f, 2);
+        }
+    }
+
+    void Start()
+    {
+
+    }
+
+    public void Refresh()
     {
         salePriceInStand.text = $"{ConvertFloatToText(info.GasSalePrice)}";
         salePrice.text = $"{ConvertFloatToText(info.GasSalePrice)}";
@@ -34,14 +55,14 @@ public class GasPriceInfoUI : MonoBehaviour
 
     public void IncreaseSale()
     {
-        float value = 0.02f;
+        float value = amount;
         info.IncreaseSalePrice(value);
         Refresh();
     }
 
     public void DecreaseSale()
     {
-        float value = 0.02f;
+        float value = amount;
         info.DecreaseSalePrice(value);
         Refresh();
     }

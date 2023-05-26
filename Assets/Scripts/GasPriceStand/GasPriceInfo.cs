@@ -7,11 +7,15 @@ public class GasPriceInfo : MonoBehaviour
     public static GasPriceInfo Instance { get; set; }
     void Awake() => Instance = this;
 
+    [Space]
+    [Range(0f, 1f)]
+    public float MaxPercent = 0.2f;
+
     public float GasSalePrice
     {
         get
         {
-            return PlayerPrefs.GetFloat(DataManager.GasSalePriceKey, MinPrice);
+            return PlayerPrefs.GetFloat(DataManager.GasSalePriceKey, MinPrice + GasBuyPrice * 0.1f);
         }
         set
         {
@@ -37,7 +41,7 @@ public class GasPriceInfo : MonoBehaviour
     {
         get
         {
-            return GasBuyPrice * 2f;
+            return GasBuyPrice * (1f + MaxPercent);
         }
     }
 
