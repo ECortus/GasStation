@@ -20,6 +20,19 @@ public static class Statistics
         }
     }
 
+    public static int Star 
+    { 
+        get 
+        { 
+            return PlayerPrefs.GetInt(DataManager.StarKey, 0);
+        } 
+        set 
+        { 
+
+            PlayerPrefs.SetInt(DataManager.StarKey, value);
+        } 
+    }
+
     public static int Money 
     { 
         get 

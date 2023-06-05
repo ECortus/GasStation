@@ -6,7 +6,7 @@ public class FridgeTriggerCollision : MonoBehaviour
 {
     [SerializeField] private Fridge fridge;
     [SerializeField] private float delayPerTransfer = 0.5f;
-    GoodsPickUp pickUp;
+    public GoodsPickUp pickUp { get; set; }
     Coroutine coroutine;
 
     public void StartTransfer()
@@ -26,7 +26,7 @@ public class FridgeTriggerCollision : MonoBehaviour
 
         while(true)
         {
-            if(pickUp.Amount > 0)
+            if(pickUp.Amount > 0 && fridge.MaxFillAmount != fridge.FillAmount)
             {
                 fridge.AddAmount(1);
                 pickUp.DecreaseAmount();
@@ -35,22 +35,26 @@ public class FridgeTriggerCollision : MonoBehaviour
             }
             else
             {
-                StopTransfer();
-                break;
+                /* StopTransfer();
+                break; */
+                yield return new WaitUntil(() => pickUp );
             }
 
             yield return wait;
         }
     }
 
-    private string Tag = "Player";
+    [SerializeField] private GameObject worker;
+    private List<string> Tags = new List<string>{"Player", "Worker"};
 
     [HideInInspector] public bool SomeoneInTrigger = false;
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.tag == Tag)
+        if(Tags.Contains(col.tag))
         {
+            if(col.tag == "Player" && worker.activeSelf) return;
+            
             pickUp = col.GetComponentInChildren<GoodsPickUp>();
             StartTransfer();
 
@@ -60,7 +64,7 @@ public class FridgeTriggerCollision : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-        if(col.tag == Tag)
+        if(col.tag == Tags[0])
         {
             fridge.TransferMoney();
         }
@@ -68,7 +72,7 @@ public class FridgeTriggerCollision : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        if(col.tag == Tag)
+        if(col.tag == Tags[0])
         {
             StopTransfer();
             SomeoneInTrigger = false;

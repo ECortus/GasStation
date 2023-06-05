@@ -9,6 +9,9 @@ public class GasTrucksController : MonoBehaviour
     public WayInfo way;
     public int ParkingIndex = 0;
 
+    [Space]
+    public TankerBarrel barrel;
+
     private List<GasTruck> TruckPool = new List<GasTruck>();
 
     private Vector3 SpawnPoint => way.Dots[0].position;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class Storage : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Storage : MonoBehaviour
     [SerializeField] private Transform storageSpawn;
     [SerializeField] private Transform storagePlace;
 
-    private List<ModelController> Models = new List<ModelController>();
+    public List<ModelController> Models = new List<ModelController>();
     private List<ModelController> ModelsPool = new List<ModelController>();
 
     ModelController model;

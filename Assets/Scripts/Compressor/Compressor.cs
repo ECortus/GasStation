@@ -23,16 +23,18 @@ public class Compressor : MonoBehaviour
     {
         int value = Level + 1;
         Level = value;
+
+        counter.Refresh();
     }
 
     [Space]
-    [SerializeField] private int defaultMaxAmount;
+    [SerializeField] private List<int> MaxAmounts;
     [HideInInspector] public int Amount;
     public int MaxAmount
     {
         get
         {
-            return defaultMaxAmount;
+            return MaxAmounts[Level];
         }
     }
 

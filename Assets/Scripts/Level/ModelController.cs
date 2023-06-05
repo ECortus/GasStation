@@ -75,6 +75,8 @@ public class ModelController : MonoBehaviour
     public async void DisableInArrive(Transform trg)
     {
         target = trg;
+
+        transform.parent = null;
         localPos = Vector3.zero;
         localRot = Vector3.zero;
 

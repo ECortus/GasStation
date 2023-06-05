@@ -7,7 +7,8 @@ public class StationFillingClientSimulation : MonoBehaviour
     public StationFilling Station;
 
     [Space]
-    [SerializeField] private StationFillingClient client;
+    [SerializeField] private List<StationFillingClient> ClientsPrefabs = new List<StationFillingClient>();
+    private StationFillingClient client => ClientsPrefabs[Random.Range(0, ClientsPrefabs.Count)];
     private List<StationFillingClient> ClientPool = new List<StationFillingClient>();
 
     [Space]
@@ -95,7 +96,7 @@ public class StationFillingClientSimulation : MonoBehaviour
                 car = clnt.transform;
             }
 
-            if(clnt != null) clnt.SetMotor(1);
+            clnt.SetMotor(1);
 
             yield return new WaitUntil(() => 
                 Vector3.Distance(car.position, SpawnPoint) > distanceToCarForNewSpawn || !car.gameObject.activeSelf

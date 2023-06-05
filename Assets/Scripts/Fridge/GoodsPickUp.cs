@@ -27,13 +27,11 @@ public class GoodsPickUp : MonoBehaviour
     public void IncreaseAmount()
     {
         Amount++;
-        Refresh();
     }
 
     public void DecreaseAmount()
     {
         Amount--;
-        Refresh();
     }
 
     public void AddGood(ModelController mdlC)
@@ -52,17 +50,5 @@ public class GoodsPickUp : MonoBehaviour
         RemoveGood(mdl);
 
         mdl.DisableInArrive(trg);
-    }
-
-    void Refresh()
-    {
-        if(Amount > 0)
-        {
-            Player.Instance.SetPickUpAnimation(true);
-        }
-        else
-        {
-            Player.Instance.SetPickUpAnimation(false);
-        }
     }
 }

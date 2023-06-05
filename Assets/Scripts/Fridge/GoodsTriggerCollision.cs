@@ -31,6 +31,8 @@ public class GoodsTriggerCollision : MonoBehaviour
         {
             if(pickUp.MaxAmount > pickUp.Amount)
             {
+                yield return new WaitUntil(() => storage.Models.Count > 0);
+
                 storage.TransferToPlayer(pickUp);
                 pickUp.IncreaseAmount();
 
@@ -38,19 +40,23 @@ public class GoodsTriggerCollision : MonoBehaviour
             }
             else
             {
-                yield return new WaitUntil(() => pickUp.MaxAmount > pickUp.Amount);
+                StopTransfer();
             }
 
             yield return wait;
         }
     }
 
-    private string Tag = "Player";
+    [SerializeField] private GameObject worker;
+    private List<string> Tags = new List<string>{"Player", "Worker"};
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.tag == Tag)
+        if(Tags.Contains(col.tag))
         {
+            if(col.tag == "Player" && worker.activeSelf) return;
+            if(col.tag == "Player" && RopeHolder.Instance.Hold) RopeHolder.Instance.ResetParent();
+
             pickUp = col.GetComponentInChildren<GoodsPickUp>();
             StartTransfer();
 
@@ -60,8 +66,10 @@ public class GoodsTriggerCollision : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        if(col.tag == Tag)
+        if(Tags.Contains(col.tag))
         {
+            if(col.tag == "Player" && worker.activeSelf) return;
+
             StopTransfer();
             info.Off();
         }

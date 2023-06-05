@@ -10,6 +10,7 @@ public static class DataManager
     public static string GasSalePriceKey = "GasSalePrice";
     public static string GasBuyPriceKey = "GasBuyPrice";
     public static string MoneyKey = "Money";
+    public static string StarKey = "Star";
 
     public static void Save()
     {

@@ -21,6 +21,8 @@ public class GasPriceInfo : MonoBehaviour
         {
             PlayerPrefs.SetFloat(DataManager.GasSalePriceKey, value);
             PlayerPrefs.Save();
+
+            ProfitUI.Instance.Refresh();
         }
     }
 
@@ -34,6 +36,8 @@ public class GasPriceInfo : MonoBehaviour
         {
             PlayerPrefs.SetFloat(DataManager.GasBuyPriceKey, value);
             PlayerPrefs.Save();
+
+            ProfitUI.Instance.Refresh();
         }
     }
 

@@ -15,12 +15,14 @@ public class Player : MonoBehaviour
     private FloatingJoystick joyStick => GameManager.Instance.Joystick;
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private GoodsPickUp pickUp;
 
     private Vector3 direction;
 
+    private bool pickUpAnim = false;
+    public void SetPickUpAnimation(bool value) => pickUpAnim = value;
+
     public bool Active = true;
-    bool isPickUpSomething = false;
-    public void SetPickUpAnimation(bool value) => isPickUpSomething = value;
 
     private void Awake()
     {
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
     private void UpdateAnimator()
     {
         Animator.SetFloat(_Speed, direction.magnitude);
-        Animator.SetBool(_PickUp, isPickUpSomething);
+        Animator.SetBool(_PickUp, pickUp.Amount > 0 || pickUpAnim);
     }
 
     private void Move()

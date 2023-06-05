@@ -75,6 +75,7 @@ public class Fridge : MonoBehaviour
     [SerializeField] private FridgeCashStorage storage;
     [SerializeField] private FridgeCounterUI counter;
     [SerializeField] private FridgeTriggerCollision trigger;
+    [SerializeField] private Jars jars;
 
     Coroutine coroutine;
 
@@ -116,6 +117,7 @@ public class Fridge : MonoBehaviour
     public void AddCash()
     {
         FillAmount--;
+        jars.Refresh();
 
         MoneyAmount += amountPerDelay;
         if(MoneyAmount > MaxMoneyAmount) MoneyAmount = MaxMoneyAmount;
@@ -139,6 +141,8 @@ public class Fridge : MonoBehaviour
     public void AddAmount(int amnt)
     {
         FillAmount += amnt;
+
+        jars.Refresh();
         counter.Refresh();
     }
 }

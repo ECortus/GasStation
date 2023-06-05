@@ -6,6 +6,7 @@ public class GasTruck : Car
 {
     private int ParkingIndex => controller.ParkingIndex;
     private WayInfo way => controller.way;
+    private TankerBarrel barrel => controller.barrel;
 
     private List<Transform> Dots => way.Dots;
     int DotIndex = 0;
@@ -54,7 +55,7 @@ public class GasTruck : Car
     {
         while(true)
         {
-            if(Vector3.Distance(transform.position, Dots[DotIndex].position) < 0.5f)
+            if(Vector3.Distance(transform.position, Dots[DotIndex].position) < 2f)
             {
                 if(DotIndex == ParkingIndex)
                 {
@@ -84,6 +85,9 @@ public class GasTruck : Car
         int amount = tanker.MaxFillAmount - tanker.FillAmount;
         money = (int)(amount * GasPriceInfo.Instance.GasBuyPrice);
 
+        barrel.enabled = true;
+        yield return new WaitUntil(() => barrel.Connected);
+
         yield return new WaitForSeconds(2f);
 
         if(money <= Statistics.Money)
@@ -106,7 +110,8 @@ public class GasTruck : Car
             /* yield return new WaitUntil(() => money <= Statistics.Money); */
         }
 
-        yield return new WaitForSeconds(2f);
+        barrel.enabled = false;
+        yield return new WaitForSeconds(1.5f);
 
         DotIndex++;
         SetTarget(Dots[DotIndex]);

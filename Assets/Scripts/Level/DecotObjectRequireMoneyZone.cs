@@ -9,7 +9,7 @@ public class DecotObjectRequireMoneyZone : MonoBehaviour
     private int MoneyAmount;
     [SerializeField] private TextMeshProUGUI amountText;
 
-    [SerializeField] private int Cost;
+    private int Cost => decor.Cost;
 
     private string Tag = "Player";
 
@@ -94,6 +94,7 @@ public class DecotObjectRequireMoneyZone : MonoBehaviour
     void Complete() 
     {
         decor.Buy();
+        Star.Plus(1);
     }
 
     void OnTriggerEnter(Collider col)
@@ -105,16 +106,6 @@ public class DecotObjectRequireMoneyZone : MonoBehaviour
             StartReduce();
         }
     }
-
-    /* void OnTriggerStay(Collider col)
-    {
-        if(!available || !ConditionToAllowInter) return;
-
-        if(col.tag == Tag)
-        {
-
-        }
-    } */
 
     void OnTriggerExit(Collider col)
     {
