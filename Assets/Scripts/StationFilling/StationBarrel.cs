@@ -9,10 +9,14 @@ public class StationBarrel : MonoBehaviour
     [SerializeField] private Transform hoseParent;
     RopeHolder rope;
 
+    private List<string> Tags = new List<string>{"Player", "Worker"};
+
     void OnTriggerEnter(Collider col)
     {
-        if(col.tag == "Player")
+        if(Tags.Contains(col.tag))
         {
+            if(col.tag == "Player" && station.WorkerActive) return;
+
             rope = col.GetComponent<RopeHolder>();
             if(rope != null && rope.Target == "Station")
             {

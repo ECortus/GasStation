@@ -5,10 +5,7 @@ using UnityEngine.Events;
 
 public class RopeHolder : MonoBehaviour
 {
-    public static RopeHolder Instance { get; set; }
-    void Awake() => Instance = this;
-
-    public string Target = "";
+    [HideInInspector] public string Target = "";
 
     public bool _Hold = false;
     public bool Hold
@@ -36,8 +33,18 @@ public class RopeHolder : MonoBehaviour
 
     [SerializeField] private UnityEvent pickUpAnim, unPickUpAnim;
 
+    float time = -999f;
+    float delayTime = 1.2f;
+
+    void Update()
+    {
+        if(time > 0f) time -= Time.deltaTime;
+    }
+
     void OnTriggerEnter(Collider col)
     {
+        if(time > 0f) return;
+
         if(col.tag == "RopePlace")
         {
             if(hose != null && col.GetComponent<HoseController>() == hose) 
@@ -51,6 +58,8 @@ public class RopeHolder : MonoBehaviour
             }
 
             hose = col.GetComponent<HoseController>();
+            if(gameObject.tag == "Player" && hose.Target == "Station" && hose.WorkerActive) return;
+
             RefreshParent(parent);
         }
     }
@@ -62,6 +71,8 @@ public class RopeHolder : MonoBehaviour
             hose.ChangeParent(parent);
             Target = hose.Target;
             Hold = true;
+
+            time = delayTime;
         }
     }
 
@@ -72,5 +83,7 @@ public class RopeHolder : MonoBehaviour
         Hold = false;
 
         hose = null;
+
+        time = delayTime;
     }
 }

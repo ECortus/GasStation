@@ -10,6 +10,16 @@ public class HoseController : MonoBehaviour
     private Transform defaultParent;
     [SerializeField] private Vector3 defPos;
 
+    [SerializeField] private GameObject worker;
+    public bool WorkerActive
+    {
+        get
+        {
+            if(worker == null) return false;
+            else return worker.activeSelf;
+        }
+    }
+
     void Start()
     {
         defaultParent = toHold.parent;

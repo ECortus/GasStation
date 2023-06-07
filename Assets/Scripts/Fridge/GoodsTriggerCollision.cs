@@ -6,11 +6,53 @@ public class GoodsTriggerCollision : MonoBehaviour
 {
     [SerializeField] private GoodsStorage storage;
     [SerializeField] private GoodsAmountCanvas info;
+    [SerializeField] private List<Fridge> fridges;
 
     [Space]
     [SerializeField] private float delayPerTransfer = 0.5f;
     GoodsPickUp pickUp;
     Coroutine coroutine;
+
+    bool AllFull
+    {
+        get
+        {
+            bool value = true;
+
+            foreach(Fridge fridge in fridges)
+            {
+                if(fridge.Level < 0) continue;
+
+                if(fridge.FillAmount != fridge.MaxFillAmount)
+                {
+                    value = false;
+                    break;
+                }
+            }
+
+            return value;
+        }
+    }
+
+    int RequireBoxes
+    {
+        get
+        {
+            int value = 0;
+
+            foreach(Fridge fridge in fridges)
+            {
+                if(fridge.Level < 0) continue;
+
+                if(fridge.FillAmount != fridge.MaxFillAmount)
+                {
+                    value += fridge.MaxFillAmount - fridge.FillAmount;
+                }
+            }
+
+            return value;
+        }
+    }
 
     public void StartTransfer()
     {
@@ -29,7 +71,9 @@ public class GoodsTriggerCollision : MonoBehaviour
 
         while(true)
         {
-            if(pickUp.MaxAmount > pickUp.Amount)
+            if(AllFull) break;
+
+            if(pickUp.MaxAmount > pickUp.Amount && pickUp.Amount < RequireBoxes)
             {
                 yield return new WaitUntil(() => storage.Models.Count > 0);
 
@@ -50,12 +94,22 @@ public class GoodsTriggerCollision : MonoBehaviour
     [SerializeField] private GameObject worker;
     private List<string> Tags = new List<string>{"Player", "Worker"};
 
+    RopeHolder rope;
+
     void OnTriggerEnter(Collider col)
     {
         if(Tags.Contains(col.tag))
         {
             if(col.tag == "Player" && worker.activeSelf) return;
-            if(col.tag == "Player" && RopeHolder.Instance.Hold) RopeHolder.Instance.ResetParent();
+
+            if(col.tag == "Player")
+            {
+                rope = GetComponent<RopeHolder>();
+                if(rope.Hold)
+                {
+                    rope.ResetParent();
+                }
+            }
 
             pickUp = col.GetComponentInChildren<GoodsPickUp>();
             StartTransfer();
@@ -72,6 +126,8 @@ public class GoodsTriggerCollision : MonoBehaviour
 
             StopTransfer();
             info.Off();
+
+            pickUp = null;
         }
     }
 }

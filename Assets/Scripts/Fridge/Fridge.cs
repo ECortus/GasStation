@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Fridge : MonoBehaviour
 {
-    int _level = 0;
+    int _level = -1;
+    public int SetupLevel = 0;
     public int MaxLevel = 5;
     /* [SerializeField] private float delayDownPerLevel = 1f; */
     public int Level
@@ -77,10 +78,38 @@ public class Fridge : MonoBehaviour
     [SerializeField] private FridgeTriggerCollision trigger;
     [SerializeField] private Jars jars;
 
+    [Space]
+    [SerializeField] private Animation sell;
+    [SerializeField] private Animation buy;
+
+    public void Buy()
+    {
+        buy.Play("ShowConstruction");
+        sell.Play("HideConstruction");
+
+        Upgrade();
+    }
+
     Coroutine coroutine;
 
     void Start()
     {
+        if(SetupLevel > -2)
+        {
+            Level = SetupLevel;
+        }
+
+        if(Level > -1)
+        {
+            buy.Play("ShowConstruction");
+            sell.Play("HideConstruction");
+        }
+        else
+        {
+            buy.Play("HideConstruction");
+            sell.Play("ShowConstruction");
+        }
+
         StartWork();
         counter.Refresh();
     }

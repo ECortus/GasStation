@@ -37,7 +37,7 @@ public class FridgeTriggerCollision : MonoBehaviour
             {
                 /* StopTransfer();
                 break; */
-                yield return new WaitUntil(() => pickUp );
+                yield return new WaitUntil(() => pickUp);
             }
 
             yield return wait;
@@ -72,10 +72,14 @@ public class FridgeTriggerCollision : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        if(col.tag == Tags[0])
+        if(Tags.Contains(col.tag))
         {
+            if(col.tag == "Player" && worker.activeSelf) return;
+
             StopTransfer();
             SomeoneInTrigger = false;
+
+            pickUp = null;
         }
     }
 }

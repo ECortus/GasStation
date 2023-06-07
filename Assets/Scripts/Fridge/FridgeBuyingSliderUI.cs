@@ -2,18 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FridgeUpgrade : RequireMoneyInteractiveZoneUI
+public class FridgeBuyingSliderUI : RequireMoneyInteractiveZoneUI
 {
     [Space]
     [SerializeField] private Fridge fridge;
-
-    void Update()
-    {
-        if(fridge.Level == fridge.MaxLevel)
-        {
-            gameObject.SetActive(false);
-        }
-    }
 
     protected override int Level
     {
@@ -35,9 +27,7 @@ public class FridgeUpgrade : RequireMoneyInteractiveZoneUI
     
     protected override void Complete()
     {
-        fridge.Upgrade();
-        /* fridge.Buy(); */
-        Reset();
+        fridge.Buy();
     }
 
     protected override bool ConditionToAllowInter 

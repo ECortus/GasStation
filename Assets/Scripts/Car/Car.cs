@@ -5,6 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     [Header("Car info: ")]
+    [SerializeField] private TypeDrive typeDrive;
     [SerializeField] private Rigidbody rb;
 
     [Space]
@@ -34,13 +35,27 @@ public class Car : MonoBehaviour
     }
 
     float time;
+    Vector3 direction;
 
     void FixedUpdate()
     {
         if(motor > 0 && target != null)
         {
-            Rotate();
-            rb.velocity = transform.forward * speedForward * GetCurveValue();
+            if(typeDrive == TypeDrive.Linear)
+            {
+                direction = (target.position - transform.position).normalized;
+                direction.y = 0f;
+                direction.z = 0f;
+                
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+            else if(typeDrive == TypeDrive.Default)
+            {
+                Rotate();
+                direction = transform.forward;
+            }
+
+            rb.velocity = direction * speedForward * GetCurveValue();
         }
         else
         {
@@ -63,4 +78,10 @@ public class Car : MonoBehaviour
         if(time < 1f) time += Time.fixedDeltaTime;
         return accelerationCurve.Evaluate(time);
     }
+}
+
+[System.Serializable]
+public enum TypeDrive
+{
+    Default, Linear
 }

@@ -53,6 +53,12 @@ public class GasPriceInfoUI : MonoBehaviour
         else return $"{wholePart}.{leftPart}$";
     }
 
+    public void EqualSaleAndBuy()
+    {
+        info.EqualSaleAndBuy();
+        Refresh();
+    }
+
     public void IncreaseSale()
     {
         float value = amount;

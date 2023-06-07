@@ -46,8 +46,11 @@ public class StationFilling : MonoBehaviour
 
     [Space]
     public Tanker tanker;
+    public Transform barrelRopeParent;
     [SerializeField] private StationFillingCashStorage cashStorage;
     [SerializeField] private StationFillingInfoSliderUI slider;
+    [SerializeField] private GameObject worker;
+    public bool WorkerActive => worker.activeSelf;
 
     [Space]
     [SerializeField] private Animation sell;
@@ -55,14 +58,20 @@ public class StationFilling : MonoBehaviour
 
     void Start()
     {
-        if(Level < 0)
+        if(SetupLevel > -2)
         {
             Level = SetupLevel;
         }
 
         if(Level > -1)
         {
-            Buy();
+            buy.Play("ShowConstruction");
+            sell.Play("HideConstruction");
+        }
+        else
+        {
+            buy.Play("HideConstruction");
+            sell.Play("ShowConstruction");
         }
 
         slider.Refresh();

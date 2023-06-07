@@ -57,6 +57,11 @@ public class GasPriceInfo : MonoBehaviour
         }
     }
 
+    public void EqualSaleAndBuy()
+    {
+        GasSalePrice = GasBuyPrice * (1f + MaxPercent / 2f);
+    }
+
     public void IncreaseSalePrice(float amount)
     {
         float value = GasSalePrice + amount;

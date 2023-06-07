@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class GasSalePriceChangeButtonUI : MonoBehaviour, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
+    [SerializeField] private Button button;
     [SerializeField] private UnityEvent buttonEvent;
     Coroutine coroutine;
 
@@ -23,6 +24,7 @@ public class GasSalePriceChangeButtonUI : MonoBehaviour, IPointerExitHandler, IP
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(!button.interactable) return;
         StartSim();
     }
 

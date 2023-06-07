@@ -43,7 +43,8 @@ public class GasTrucksController : MonoBehaviour
 
         if(!existInPool)
         {
-            truck = Instantiate(gasTruck);
+            /* truck = Instantiate(gasTruck); */
+            truck = gasTruck;
             truck.On(this, SpawnPoint, SpawnRot);
 
             TruckPool.Add(truck);

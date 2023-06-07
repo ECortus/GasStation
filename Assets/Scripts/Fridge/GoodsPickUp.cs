@@ -44,8 +44,26 @@ public class GoodsPickUp : MonoBehaviour
         Goods.Remove(mdlC);
     }
 
+    public void RemoveAndDisableAllBoxes()
+    {
+        ModelController mdl;
+        int count = Goods.Count;
+
+        for(int i = 0; i < count; i++)
+        {
+            mdl = Goods[0];
+            Goods.Remove(mdl);
+
+            mdl.Disable();
+
+            DecreaseAmount();
+        }
+    }
+
     public void MoveGoodToDestination(Transform trg)
     {
+        if(Goods.Count == 0) return;
+
         ModelController mdl = Goods[Goods.Count - 1];
         RemoveGood(mdl);
 

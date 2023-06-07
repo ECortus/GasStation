@@ -826,8 +826,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0baf8c52e04f954ca9e50943c95a765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeDrive: 0
   rb: {fileID: 8266895739320649337}
-  rotateSpeed: 3
+  rotateSpeed: 5
   speedForward: 7
   accelerationCurve:
     serializedVersion: 2
