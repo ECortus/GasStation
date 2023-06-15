@@ -12,5 +12,6 @@ public class CompressorCashStorage : CashStorage
     public void TransferAllToPlayer()
     {
         ReduceInArriveAll();
+        AdTimer.Instance.TryOn();
     }
 }

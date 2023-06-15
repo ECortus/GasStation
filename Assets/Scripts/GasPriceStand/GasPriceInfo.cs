@@ -10,6 +10,7 @@ public class GasPriceInfo : MonoBehaviour
     [Space]
     [Range(0f, 1f)]
     public float MaxPercent = 0.2f;
+    [SerializeField] private AutoPrice autoPrice;
 
     public float GasSalePrice
     {
@@ -88,5 +89,10 @@ public class GasPriceInfo : MonoBehaviour
         float value = GasBuyPrice - amount;
         if(value < MinPrice) GasBuyPrice = MinPrice;
         else GasBuyPrice = value;
+    }
+    
+    public void OnAutoPrice()
+    {
+        RewardFunctions.Instance.EnableAutoPrice(autoPrice);
     }
 }

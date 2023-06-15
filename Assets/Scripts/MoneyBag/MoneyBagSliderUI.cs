@@ -6,10 +6,12 @@ public class MoneyBagSliderUI : InteractiveSliderUI
 {
     [Space]
     [SerializeField] private MoneyBag bag;
+    [SerializeField] private MoneyBagTimer timer;
 
     protected override void Complete()
     {
         bag.PlusToPlayer();
+        timer.On();
     }
 
     protected override bool ConditionToAllowInter 

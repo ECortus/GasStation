@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Tanker : MonoBehaviour
 {
-    int _level = 0;
+    private string Name => gameObject.name;
+
     public int MaxLevel = 5;
     public int Level
     {
         get
         {
-            return _level;
+            return PlayerPrefs.GetInt(Name + "Level", 0);
         }
         set
         {
-            _level = value;
+            PlayerPrefs.SetInt(Name + "Level", value);
+            PlayerPrefs.Save();
         }
     }
 
@@ -31,7 +33,18 @@ public class Tanker : MonoBehaviour
     [Space]
     [SerializeField] private List<int> MaxFillAmountEachLevel = new List<int>();
     public List<int> CostAmountEachLevel = new List<int>();
-    [HideInInspector] public int FillAmount;
+    public int FillAmount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(Name + "Fill", 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt(Name + "Fill", value);
+            PlayerPrefs.Save();
+        }
+    }
     public int MaxFillAmount
     {
         get

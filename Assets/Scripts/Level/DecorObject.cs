@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class DecorObject : MonoBehaviour
 {
-    bool buyed = false;
-
     public bool Buyed
     {
         get
         {
-            return buyed;
+            return PlayerPrefs.GetInt(gameObject.name + "Decor", -1) > 0 ? true : false;
         }
         set
         {
-            buyed = value;
+            PlayerPrefs.SetInt(gameObject.name + "Decor", value ? 1 : -1);
+            PlayerPrefs.Save();
         }
     }
 
@@ -37,6 +36,8 @@ public class DecorObject : MonoBehaviour
     {
         buy.Play("ShowConstruction");
         sell.Play("HideConstruction");
+
+        Buyed = true;
 
         this.enabled = false;
     }

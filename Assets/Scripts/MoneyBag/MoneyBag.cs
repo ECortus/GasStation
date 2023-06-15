@@ -8,6 +8,6 @@ public class MoneyBag : MonoBehaviour
 
     public void PlusToPlayer()
     {
-        Money.Plus(Amount);
+        RewardFunctions.Instance.PlusMoneyFromBag(Amount);
     }
 }

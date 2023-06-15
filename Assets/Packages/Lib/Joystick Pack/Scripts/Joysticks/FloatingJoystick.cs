@@ -30,6 +30,17 @@ public class FloatingJoystick : Joystick
         base.OnPointerUp(eventData);
     }
 
+    void OnDisable()
+    {
+        Reset();
+    }
+
+    public override void Reset()
+    {
+        background.gameObject.SetActive(false);
+        base.Reset();
+    }
+
     protected override void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
         if (magnitude > moveThreshold)

@@ -90,7 +90,8 @@ public class GasTruck : Car
 
         yield return new WaitForSeconds(2f);
 
-        if(money <= Statistics.Money)
+        yield return RewardFunctions.Instance.FillTanker(tanker, money, amount);
+        /* if(money <= Statistics.Money)
         {
             Money.Minus(money);
             tanker.Fill();
@@ -106,9 +107,7 @@ public class GasTruck : Car
             tanker.FillValue(amount);
 
             GasBuyPriceSimulation.Instance.Change();
-
-            /* yield return new WaitUntil(() => money <= Statistics.Money); */
-        }
+        } */
 
         barrel.enabled = false;
         yield return new WaitForSeconds(1.5f);

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Fridge : MonoBehaviour
 {
-    int _level = -1;
+    private string Name => gameObject.name;
+
     public int SetupLevel = 0;
     public int MaxLevel = 5;
     /* [SerializeField] private float delayDownPerLevel = 1f; */
@@ -12,11 +13,12 @@ public class Fridge : MonoBehaviour
     {
         get
         {
-            return _level;
+            return PlayerPrefs.GetInt(Name + "Level", SetupLevel);
         }
         set
         {
-            _level = value;
+            PlayerPrefs.SetInt(Name + "Level", value);
+            PlayerPrefs.Save();
         }
     }
 
@@ -38,7 +40,19 @@ public class Fridge : MonoBehaviour
     }
 
     [SerializeField] private int defaultMaxFillAmount;
-    [HideInInspector] public int FillAmount;
+    public int FillAmount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(Name + "Fill", 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt(Name + "Fill", value);
+            PlayerPrefs.Save();
+        }
+    }
+
     public int MaxFillAmount
     {
         get
@@ -94,7 +108,7 @@ public class Fridge : MonoBehaviour
 
     void Start()
     {
-        if(SetupLevel > -2)
+        if(SetupLevel > -2 && Level <= SetupLevel)
         {
             Level = SetupLevel;
         }
@@ -112,6 +126,8 @@ public class Fridge : MonoBehaviour
 
         StartWork();
         counter.Refresh();
+
+        if(FillAmount > 0) jars.Refresh();
     }
 
     public void StartWork()

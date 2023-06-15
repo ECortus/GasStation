@@ -13,6 +13,8 @@ public class StationBarrel : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
+        if(station.Level < 0) return;
+
         if(Tags.Contains(col.tag))
         {
             if(col.tag == "Player" && station.WorkerActive) return;
@@ -32,7 +34,7 @@ public class StationBarrel : MonoBehaviour
         await UniTask.Delay(1500);
 
         station.Fill();
-        await UniTask.Delay(500);
+        await UniTask.Delay(1500);
 
         rope.ResetParent();
         rope = null;

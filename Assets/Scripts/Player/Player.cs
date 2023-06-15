@@ -54,8 +54,15 @@ public class Player : MonoBehaviour
 #region Movement
     private void UpdateDirection()
     {
-        direction = new Vector3(joyStick.Horizontal, 0, joyStick.Vertical).normalized;
-        direction = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up) * direction;
+        if(joyStick.gameObject.activeSelf)
+        {
+            direction = new Vector3(joyStick.Horizontal, 0, joyStick.Vertical).normalized;
+            direction = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up) * direction;
+        }
+        else
+        {
+            direction = Vector3.zero;
+        }
     }
 
     private void UpdateAnimator()

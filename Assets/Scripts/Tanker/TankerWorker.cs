@@ -66,7 +66,7 @@ public class TankerWorker : Worker
             {
                 if(station.Level < 0) continue;
                 
-                if(station.FillAmount != station.MaxFillAmount)
+                if(station.FillAmount < station.MaxFillAmount)
                 {
                     notfull = station;
                     break;

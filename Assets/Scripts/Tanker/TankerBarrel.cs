@@ -30,7 +30,7 @@ public class TankerBarrel : MonoBehaviour
 
         Connected = true;
 
-        await UniTask.Delay(2000);
+        await UniTask.Delay(3500);
 
         Connected = false;
 

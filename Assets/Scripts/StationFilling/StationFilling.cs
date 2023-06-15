@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StationFilling : MonoBehaviour
 {
-    int _level = -1;
+    private string Name => gameObject.name;
+
     [SerializeField] private int SetupLevel = 0;
     public int MaxLevel = 5;
     [SerializeField] private List<int> MaxFillAmountEachLevel = new List<int>();
@@ -14,11 +15,12 @@ public class StationFilling : MonoBehaviour
     {
         get
         {
-            return _level;
+            return PlayerPrefs.GetInt(Name + "Level", SetupLevel);
         }
         set
         {
-            _level = value;
+            PlayerPrefs.SetInt(Name + "Level", value);
+            PlayerPrefs.Save();
         }
     }
 
@@ -30,9 +32,20 @@ public class StationFilling : MonoBehaviour
         slider.Refresh();
     }
 
-    [Space]
     /* [SerializeField] private int defaultMaxFillAmount; */
-    [HideInInspector] public int FillAmount;
+    public int FillAmount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(Name + "Fill", 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt(Name + "Fill", value);
+            PlayerPrefs.Save();
+        }
+    }
+
     public int MaxFillAmount
     {
         get
@@ -58,7 +71,7 @@ public class StationFilling : MonoBehaviour
 
     void Start()
     {
-        if(SetupLevel > -2)
+        if(SetupLevel > -2 && Level <= SetupLevel)
         {
             Level = SetupLevel;
         }

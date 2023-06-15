@@ -5,7 +5,19 @@ using TMPro;
 
 public class WorkerBuy : MonoBehaviour
 {
-    public bool Buyed = false;
+    public bool Buyed
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(gameObject.name, -1) > 0 ? true : false;
+        }
+        set
+        {
+            PlayerPrefs.SetInt(gameObject.name, value ? 1 : -1);
+            PlayerPrefs.Save();
+        }
+    }
+
     [SerializeField] private GameObject worker;
 
     protected virtual int Level { get; }
@@ -91,11 +103,13 @@ public class WorkerBuy : MonoBehaviour
         }        
     }
 
-    bool ConditionToAllowInter { get => Statistics.Money >= MoneyAmount; }
+    bool ConditionToAllowInter { get => Statistics.Money >= MoneyAmount && !Buyed; }
     void Complete() 
     {
         worker.SetActive(true);
         gameObject.SetActive(false);
+
+        Buyed = true;
     }
 
     void OnTriggerEnter(Collider col)

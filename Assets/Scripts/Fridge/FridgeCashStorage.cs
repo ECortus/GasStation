@@ -12,5 +12,6 @@ public class FridgeCashStorage : CashStorage
     public void TransferAllToPlayer()
     {
         ReduceInArriveAll();
+        AdTimer.Instance.TryOn();
     }
 }

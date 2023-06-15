@@ -12,12 +12,12 @@ public class AutoPrice : MonoBehaviour
     Coroutine coroutine;
     float time, delta;
 
-    public void StartAuto()
+    public void On()
     {
         if(coroutine == null) coroutine = StartCoroutine(Auto());
     }
 
-    public void StopAuto()
+    public void Off()
     {
         if(coroutine != null) StopCoroutine(coroutine);
         coroutine = null;

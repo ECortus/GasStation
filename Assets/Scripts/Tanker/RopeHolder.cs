@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Cysharp.Threading.Tasks;
 
 public class RopeHolder : MonoBehaviour
 {
@@ -76,9 +77,11 @@ public class RopeHolder : MonoBehaviour
         }
     }
 
-    public void ResetParent()
+    public /* async */ void ResetParent()
     {
         hose.ChangeParent();
+
+        /* await UniTask.Delay(1000); */
         Target = "";
         Hold = false;
 
