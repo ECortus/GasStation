@@ -7,9 +7,24 @@ using UnityEngine.UI;
 public class SkinButtonUI : MonoBehaviour
 {
     [SerializeField] private SkinsShop shop;
+    
+    public bool Buyed
+    {
+        get
+        {
+            return buyedDefault || PlayerPrefs.GetInt(gameObject.name + "Skin", -1) > 0 ? true : false;
+        }
+        set
+        {
+            if(buyedDefault) return;
+
+            PlayerPrefs.SetInt(gameObject.name + "Skin", value ? 1 : -1);
+            PlayerPrefs.Save();
+        }
+    }
 
     [Space]
-    public bool Buyed;
+    public bool buyedDefault = false;
     public bool Equiped;
     public int Cost;
     [HideInInspector] public GameObject model;

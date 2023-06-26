@@ -23,17 +23,27 @@ public class AdTimer : MonoBehaviour
     {
         if(time <= 0f)
         {
-            GameManager.Instance.Joystick.gameObject.SetActive(false);
-            adCanvas.SetActive(true);
-            /* Reset(); */
+            On();
         }
+    }
+
+    void On()
+    {
+        GameManager.Instance.Joystick.gameObject.SetActive(false);
+        adCanvas.SetActive(true);
+
+        /* Reset(); */
+    }
+
+    void Off()
+    {
+        adCanvas.SetActive(false);
+        GameManager.Instance.Joystick.gameObject.SetActive(true);
     }
 
     public void Reset()
     {
-        adCanvas.SetActive(false);
-        GameManager.Instance.Joystick.gameObject.SetActive(true);
-        
+        Off();
         time = Random.Range(minTime, maxTime);
     }
 

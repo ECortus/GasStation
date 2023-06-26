@@ -9,11 +9,32 @@ public class MoneyBagTimer : MonoBehaviour
     [SerializeField] private float TimerSeconds = 180f;
     [SerializeField] private Collider sliderUI;
     [SerializeField] private TextMeshProUGUI timerText;
-    float time = 0f;
+    float time
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("BagTimer", 0f);
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("BagTimer", value);
+            PlayerPrefs.Save();
+        }
+    }
 
     void Start()
     {
-        Off();
+        if(time > 0f)
+        {
+            timerText.gameObject.SetActive(true);
+            sliderUI.enabled = false;
+            Convert(time);
+            this.enabled = true;
+        }
+        else
+        {
+            Off();
+        }
     }
 
     public void On()

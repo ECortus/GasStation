@@ -11,7 +11,7 @@ public class FillTankerSliderUI : InteractiveSliderUI
     protected override void Complete()
     {
         /* tanker.Fill(); */
-        trucksController.CallToFill();
+        trucksController.CallToFill(true);
     }
 
     protected override bool ConditionToAllowInter 

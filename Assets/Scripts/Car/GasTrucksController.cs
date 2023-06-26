@@ -19,7 +19,7 @@ public class GasTrucksController : MonoBehaviour
 
     [HideInInspector] public bool Called = false;
 
-    public void CallToFill()
+    public void CallToFill(bool costed)
     {
         if(Called) return;
 
@@ -34,7 +34,7 @@ public class GasTrucksController : MonoBehaviour
                 if(!truck.Active)
                 {
                     existInPool = true;
-                    truck.On(this, SpawnPoint, SpawnRot);
+                    truck.On(this, costed, SpawnPoint, SpawnRot);
                     TruckPool.Add(truck);
                     break;
                 }
@@ -45,7 +45,7 @@ public class GasTrucksController : MonoBehaviour
         {
             /* truck = Instantiate(gasTruck); */
             truck = gasTruck;
-            truck.On(this, SpawnPoint, SpawnRot);
+            truck.On(this, costed, SpawnPoint, SpawnRot);
 
             TruckPool.Add(truck);
         }

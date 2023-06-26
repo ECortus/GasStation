@@ -14,9 +14,12 @@ public class GasTruck : Car
     private GasTrucksController controller;
     private Tanker tanker => controller.tanker;
 
-    public void On(GasTrucksController conrt, Vector3 pos, Vector3 rot)
+    bool Costed = false;
+
+    public void On(GasTrucksController conrt, bool costed, Vector3 pos, Vector3 rot)
     {
         controller = conrt;
+        Costed = costed;
         transform.position = pos;
         transform.eulerAngles = rot;
 
@@ -90,24 +93,30 @@ public class GasTruck : Car
 
         yield return new WaitForSeconds(2f);
 
-        yield return RewardFunctions.Instance.FillTanker(tanker, money, amount);
-        /* if(money <= Statistics.Money)
+        if(Costed)
         {
-            Money.Minus(money);
-            tanker.Fill();
+            yield return RewardFunctions.Instance.FillTanker(tanker, money, amount);
 
-            GasBuyPriceSimulation.Instance.Change();
+            /* if(money <= Statistics.Money)
+            {
+                Money.Minus(money);
+                tanker.Fill();
+            }
+            else if(Statistics.Money > 0 && money > Statistics.Money)
+            {
+                money = Statistics.Money;
+                amount = (int)(money / GasPriceInfo.Instance.GasBuyPrice);
+
+                Money.Minus(money);
+                tanker.FillValue(amount);
+            }
+
+            GasBuyPriceSimulation.Instance.Change(); */
         }
-        else if(Statistics.Money > 0 && money > Statistics.Money)
+        else
         {
-            money = Statistics.Money;
-            amount = (int)(money / GasPriceInfo.Instance.GasBuyPrice);
-
-            Money.Minus(money);
-            tanker.FillValue(amount);
-
-            GasBuyPriceSimulation.Instance.Change();
-        } */
+            tanker.Fill();
+        }
 
         barrel.enabled = false;
         yield return new WaitForSeconds(1.5f);

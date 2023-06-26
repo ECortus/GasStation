@@ -15,8 +15,6 @@ public class RewardFunctions : MonoBehaviour
         {
             Money.Minus(money);
             tanker.Fill();
-
-            GasBuyPriceSimulation.Instance.Change();
         }
         else if(Statistics.Money > 0 && money > Statistics.Money)
         {
@@ -25,9 +23,15 @@ public class RewardFunctions : MonoBehaviour
 
             Money.Minus(money);
             tanker.FillValue(amount);
-
-            GasBuyPriceSimulation.Instance.Change();
         }
+
+        GasBuyPriceSimulation.Instance.Change();
+    }
+
+    public void CallToFillTankerByAD(ref float time, float adDelay, GasTrucksController trucksController)
+    {
+        trucksController.CallToFill(false);
+        time = adDelay;
     }
 
     public void PlusMoneyFromBag(int amount)
